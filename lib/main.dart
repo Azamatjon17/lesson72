@@ -3,6 +3,7 @@ import 'package:lesson72/firebase_options.dart';
 import 'package:lesson72/services/firestore_firebase_service.dart';
 import 'package:lesson72/services/location_service.dart';
 import 'package:lesson72/views/screens/home_screen.dart';
+import 'package:lesson72/views/screens/home_screen_map.dart';
 import 'package:provider/provider.dart';
 // ignore: depend_on_referenced_packages
 import 'package:firebase_core/firebase_core.dart';
@@ -13,6 +14,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await LocationService.init();
+  await LocationService.getCurrentLocation();
 
   runApp(const MainApp());
 }
@@ -25,16 +27,14 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-
-
   @override
   Widget build(BuildContext context) {
-  
     return ChangeNotifierProvider(
         create: (context) => FirestoreFirebaseService(),
         builder: (context, child) {
           return const MaterialApp(
-            home: HomeScreen(),
+            debugShowCheckedModeBanner: false,
+            home: HomeScreenMap(),
           );
         });
   }
