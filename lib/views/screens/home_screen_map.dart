@@ -34,10 +34,17 @@ class _HomeScreenMapState extends State<HomeScreenMap> {
   Marker? selectedMarker;
   LatLng? selectedPosition;
 
-  final LatLng _center = LatLng(LocationService.locationData!.latitude!, LocationService.locationData!.longitude!);
+  LatLng _center = LatLng(LocationService.locationData!.latitude!, LocationService.locationData!.longitude!);
 
   void _onMapCreated(GoogleMapController controller) {
     myController = controller;
+  }
+
+  void liveLocation() {
+    LocationService.getLiveLocation().listen((value) {
+      _center = LatLng(value.latitude!, value.longitude!);
+      setState(() {});
+    });
   }
 
   void addLocationMarker() {
@@ -53,6 +60,9 @@ class _HomeScreenMapState extends State<HomeScreenMap> {
         setState(() {
           polylines.add(
             Polyline(
+              jointType: JointType.round,
+              geodesic: true,
+              endCap: Cap.roundCap,
               polylineId: PolylineId(UniqueKey().toString()),
               color: Colors.blue,
               width: 5,
@@ -64,11 +74,11 @@ class _HomeScreenMapState extends State<HomeScreenMap> {
     }
   }
 
-  // void onCameraMove(CameraPosition position) {
-  //   setState(() {
-  //     myCurrentPosition = position.target;
-  //   });
-  // }
+  @override
+  void initState() {
+    super.initState();
+    liveLocation();
+  }
 
   void onLongPress(LatLng position) {
     setState(() {

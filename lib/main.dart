@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lesson72/firebase_options.dart';
 import 'package:lesson72/services/firestore_firebase_service.dart';
 import 'package:lesson72/services/location_service.dart';
-import 'package:lesson72/views/screens/home_screen.dart';
 import 'package:lesson72/views/screens/home_screen_map.dart';
 import 'package:provider/provider.dart';
 // ignore: depend_on_referenced_packages
